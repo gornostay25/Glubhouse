@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "..\\TransfersApp\\data"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "data"
+	}
+}
