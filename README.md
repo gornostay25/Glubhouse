@@ -1,5 +1,6 @@
 # Glubhouse
 Clubhouse Is unofficial android client for qpython
+Glubhouse use [clubhouse-py](https://github.com/stypr/clubhouse-py)
 
 ## Glubhouse can
 - Authentication
