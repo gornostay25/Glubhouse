@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-	
+
 	<application
 		android:allowBackup="true"
 		android:icon="@drawable/glubhouse"
@@ -41,16 +41,16 @@
                 <data android:host="www.joinclubhouse.com" android:pathPrefix="/event/" android:scheme="https"/>
 			</intent-filter>
 		</activity>
-        
+
         <activity 
             android:noHistory = "true"
             android:name=".API"
             android:theme="@style/AppTheme.Transparent"
             android:exported="true" >
         </activity>
-        
+
         <service android:name=".APIService" />
         <receiver android:name=".APIReciver" />
-        
+
 	</application>
 </manifest>

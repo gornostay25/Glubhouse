@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
   {
     Toast.makeText(getApplicationContext(), "Grant permission and go back", Toast.LENGTH_LONG).show();
     cont.startActivityForResult(new Intent().setClassName(extPlgPlusName, extPlgPlusName + ".MIndexActivity"), StartQP);
-    
+
 //    boolean isUnp = funcs.unpackZip("/sdcard/qpython/projects3/", "Glubhouse.zip");
 //    if (isUnp)
 //    {
@@ -135,14 +135,14 @@ public class MainActivity extends AppCompatActivity
 
   public void RunPipInstalation()
   {
-    
+
     String code = "import os,zipfile\n" +
       "os.system('mkdir /sdcard/qpython/projects3/Glubhouse')\n" +
-      "with zipfile.ZipFile('/sdcard/Android/data/io.github.gornostay25.glubhouse/files/Glubhouse.zip', 'r') as zip_ref:\n"+
-      "    zip_ref.extractall('/sdcard/qpython/projects3/')\n"+
-      "os.system('cd /sdcard/qpython/projects3/ && rm Glubhouse.zip')\n"+
+      "with zipfile.ZipFile('/sdcard/Android/data/io.github.gornostay25.glubhouse/files/Glubhouse.zip', 'r') as zip_ref:\n" +
+      "    zip_ref.extractall('/sdcard/qpython/projects3/')\n" +
+      "os.system('cd /sdcard/qpython/projects3/ && rm Glubhouse.zip')\n" +
       "os.system('cd /sdcard/qpython/projects3/Glubhouse && /data/data/org.qpython.qpy3/files/bin/python3-android5 /data/data/org.qpython.qpy3/files/bin/pip3 install -r requirements.txt')";
-    
+
     Toast.makeText(getApplicationContext(), "Whait for installing and click ENTER", Toast.LENGTH_LONG).show();
     cont.startActivityForResult(funcs.SendCodeToQPython(code), InstallPipReq);
 
@@ -341,44 +341,49 @@ public class MainActivity extends AppCompatActivity
 
 
   @Override
-  protected void onNewIntent(Intent intent){
+  protected void onNewIntent(Intent intent)
+  {
     super.onNewIntent(intent);
     setIntent(intent);
-    if(Intent.ACTION_VIEW.equals(intent.getAction())){
+    if (Intent.ACTION_VIEW.equals(intent.getAction()))
+    {
       //joinChannelFromIntent();
       Uri data=getIntent().getData();
       List<String> path=data.getPathSegments();
-      String id=path.get(path.size()-1);
-      if(path.get(0).equals("room")){
+      String id=path.get(path.size() - 1);
+      if (path.get(0).equals("room"))
+      {
         //joinChannelById(id);
-        String code = "#qpy::webapp:Glubhouse\n#qpy://localhost:11358/room/"+id+"\n"+
-        "import os,re"+
-        "for x in os.popen(\"ps -o args -a\").read().split(\"\\n\")[1:-1]:\n"+
-        "    if (re.match(x),'Glubhouse/main.py$'):"+
-        "        print('yes',x)"+
-        "    else: print('no',x)";
+        String code = "#qpy::webapp:Glubhouse\n#qpy://localhost:11358/room/" + id + "\n" +
+          "import os,re" +
+          "for x in os.popen(\"ps -o args -a\").read().split(\"\\n\")[1:-1]:\n" +
+          "    if (re.match(x),'Glubhouse/main.py$'):" +
+          "        print('yes',x)" +
+          "    else: print('no',x)";
         /*
          #qpy:webapp:Glubhouse
          #qpy://localhost:11358/start
          def noRepeat():
          me = os.popen("ps -o args -p "+str(os.getpid())).read().split("\n")[1:-1][0]
          for x in os.popen("ps -o pid,args -a").read().split("\n")[1:-1]:
-             x = x.split(' ',1)
-             print(x[1] == me)
-             if(x[0] != str(os.getpid()) and x[1] == me):
-                 sys.exit(0)
-        */
+         x = x.split(' ',1)
+         print(x[1] == me)
+         if(x[0] != str(os.getpid()) and x[1] == me):
+         sys.exit(0)
+         */
         cont.startActivityForResult(funcs.SendCodeToQPython(code), 1220);
-      }else if(path.get(0).equals("event")){
+      }
+      else if (path.get(0).equals("event"))
+      {
         //
         String code = "";
         cont.startActivityForResult(funcs.SendCodeToQPython(code), 1220);
       }
     }
   }
-  
-  
-  
+
+
+
 
   /**
    * Background Async Task to download file
