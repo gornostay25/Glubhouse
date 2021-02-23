@@ -5,7 +5,7 @@ Clubhouse Is unofficial android client for qpython
 - Authentication
  - [X] login
   - [X] Phone verification
- - [] Registration (beta)
+ - [ ] Registration (beta)
  - [X] Whaiting to invite
 
 
