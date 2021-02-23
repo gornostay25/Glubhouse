@@ -2,11 +2,30 @@
 #qpy://localhost:11358/start
 
 import sys, androidhelper,json
+try:
+    droid = androidhelper.Android()
+except:
+    print("android api error")
+    exit(1)
 from bottle import *
 import bottle
+
+try:
+    import requests
+except:
+    droid.makeToast("Installing requests library please whait")
+    os.system('cd /sdcard/qpython/projects3/Glubhouse && /data/data/org.qpython.qpy3/files/bin/python3-android5 /data/data/org.qpython.qpy3/files/bin/pip3 install -r requirements.txt')
+    try:
+        import requests
+        droid.makeToast("Success installing")
+
+    except:
+        #toast
+        droid.makeToast("Error: Please install requests library")
+        exit(1)
+
 from clubhouse import Clubhouse
-	
-droid = androidhelper.Android()
+
 bottle.TEMPLATE_PATH.insert(0, '/sdcard/qpython/projects3/Glubhouse/res/templates/')
 app = Bottle()
 
@@ -118,6 +137,8 @@ def loginOut():
 def MyToken():
     cred = GetCredential()
     if (cred[1]["extras"]):
+        response.content_type = "application/json"
+
         return json.dumps(cred[1]["extras"])
     else:
         redirect("/login")
@@ -131,21 +152,36 @@ def MyToken():
     	cred["udevice"])
     return str(client.me())
     
-#Not working
-@app.route("/api/invite/<phone>")
-def InviteUser(phone):
-    cred = GetCredential()
-    token = cred[1]["extras"]["user_token"]
-    uid = 	cred[1]["extras"]["user_id"]
-    udev =	cred[1]["extras"]["user_device"]
-        
+@app.post("/api/channels")
+def GetChannelsList():
+    cred = request.json
     client = getCClient(
-    	token,
-    	uid,
-    	udev)
-    return str(client.invite_from_waitlist("517320708"))
+    cred["utoken"],
+    cred["uid"],
+    cred["udevice"])
+    toRet =[]
+    channels = client.get_channels()['channels']
+    for x in channels:
+        toRet.append({
+        	"topic":x["topic"],
+        	"channel":x["channel"],
+        	'num_speakers': x['num_speakers'], 
+        	'num_all': x['num_all'],
+        	'channel_id':x['channel_id']
+        	})
+    response.content_type = "application/json"
 
-
+    return json.dumps(toRet)    
+    
+    
+app.post("/api/updateName/<name>")
+def APIupdateName(name):
+    cred = request.json
+    client = getCClient(
+    cred["utoken"],
+    cred["uid"],
+    cred["udevice"])
+    #return client.
 
 
 #########    FUNCTIONS   ################
@@ -203,8 +239,10 @@ def noRepeat():
         x = x.split(' ',1)
         print(x[1] == me)
         if(x[0] != str(os.getpid()) and x[1] == me):
-            droid.makeToast("anather")
+            droid.makeToast("Glubhouse")
             sys.exit(0)
+
+
 def noTemplate(file):
     with open("/sdcard/qpython/projects3/Glubhouse/res/templates/"+file,"r") as f:
         return f.read()

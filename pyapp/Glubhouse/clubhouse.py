@@ -10,7 +10,7 @@ Please make sure to know what you're trying to do!
 Sending an odd API request could result in a permanent ban on your account.
 """
 
-import uuid
+import uuid,os
 import random
 import secrets
 import functools

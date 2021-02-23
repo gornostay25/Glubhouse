@@ -13,9 +13,17 @@ background-color:#F1EEE4;
 </head>
 <body>
 
-<div class="container mt-5" >
-My dick is big
+<main id="main" class="container mt-5" >
+<div class="card">
+  <div class="card-body d-flex">
+  <div class="rounded" width="30px" >
+  <img src="">
+  </div>
+    <h5 class="card-title">$(r.topic)</h5>
+    <span>$(r["num_speakers"])</span>
+  </div>
 </div>
+</main>
 
 
 
@@ -25,7 +33,35 @@ My dick is big
 </div>
 
 <script>
+alert(fetch)
 
+fetch("/api/channels",{
+method:"post",
+headers: {
+      'Content-Type': 'application/json'
+},
+body:JSON.stringify({
+utoken:localStorage.getItem("utoken"),
+uid:localStorage.getItem("uid"),
+udevice:localStorage.getItem("udevice")
+})
+}).then(r=>{
+return r.json()})
+.then(r=>{
+alert(r)
+document.getElementById("main").innerHTML = r.map(e=>{
+return `<div class="card">
+  <div class="card-body d-flex">
+  <div class="rounded" width="30px" >
+  <img src="">
+  </div>
+    <h5 class="card-title">`+e.topic+`</h5>
+    <span>`+e["num_speakers"]+`</span>
+  </div>
+</div>`;
+}).join("")
+
+})
 
 </script>
 </body>
