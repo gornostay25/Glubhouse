@@ -1,2 +1,2 @@
 # Glubhouse
-Clubhouse android
+Clubhouse Is unofficial android client for qpython
