@@ -3,8 +3,7 @@ Clubhouse Is unofficial android client for qpython
 
 # Screenshots
 Permissins screen
-![](https://gornostay25.github.io/Glubhouse/screenshots/permissions.jpg)
+![permissions](https://raw.githubusercontent.com/gornostay25/Glubhouse/main/sceenshots/permissions.jpg)
 
 Login screen
-![](https://gornostay25.github.io/Glubhouse/screenshots/login.jpg)
-
+![login](https://raw.githubusercontent.com/gornostay25/Glubhouse/main/sceenshots/login.jpg)
