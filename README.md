@@ -3,10 +3,10 @@ Clubhouse Is unofficial android client for qpython
 
 ## Glubhouse can
 - Authentication
- - [X] login
-  - [X] Phone verification
- - [ ] Registration (beta)
- - [X] Whaiting to invite
+    - [X] login
+    - [X] Phone verification
+    - [ ] Registration (beta)
+    - [X] Whaiting to invite
 
 
 ## WTF? Why you start this project?
