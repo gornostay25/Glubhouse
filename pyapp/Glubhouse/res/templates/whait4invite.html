@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<style>
+body{
+background-color:#F1EEE4;
+height:100vh;
+}
+.container{
+height:100vh;
+}
+</style>
+</head>
+<body class="" >
+
+<div class="container d-flex justify-content-center" >
+<div class="text-center align-self-center" style="transform: translateY(-70%);" >
+<h1>
+<img width="50px" src="https://www.joinclubhouse.com/static/img/icon_wave.2872aeea710c.png" > Glubhouse
+</h1>
+<h2>
+You're still on the waitlist. Find your friends to get yourself in.
+</h2>
+<br>
+<h4>You're id: <span id="id" ></span></h4>
+</div>
+
+
+</div>
+
+
+
+<div class="position-absolute bottom-0 mb-3 ms-3" >
+<a href="javascript:milib.close()" >Exit</a> or
+<a href="/loginout" >Logout</a>
+</div>
+
+<script>
+document.getElementById("id").innerText = localStorage.getItem("uid")
+
+
+</script>
+</body>
+</html>
