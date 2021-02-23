@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,12 +21,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity 
 {
 
-  String extPlgPlusName = "org.qpython.qpy3";
+  public static String extPlgPlusName = "org.qpython.qpy3";
   String AppPath = "/sdcard/qpython/projects3/";
 //  public String ZIPARURL = "https://github.com/gornostay25/Glubhouse/raw/main/Glubhouse.zip";
   TextView Pprogress;
@@ -133,27 +135,16 @@ public class MainActivity extends AppCompatActivity
 
   public void RunPipInstalation()
   {
-    Intent intent = new Intent();
-    intent.setClassName(extPlgPlusName, "org.qpython.qpylib.MPyApi");
-    intent.setAction(extPlgPlusName + ".action.MPyApi");
-    Bundle mBundle = new Bundle(); 
-    mBundle.putString("app", "myappid");
-    mBundle.putString("act", "onPyApi");
-    mBundle.putString("flag", "onQPyExec");            // any String flag you may use in your context
-    mBundle.putString("param", "");     // param String param you may use in your context
-    /*
-     * The Python code we will run
-     */
+    
     String code = "import os,zipfile\n" +
       "os.system('mkdir /sdcard/qpython/projects3/Glubhouse')\n" +
       "with zipfile.ZipFile('/sdcard/Android/data/io.github.gornostay25.glubhouse/files/Glubhouse.zip', 'r') as zip_ref:\n"+
       "    zip_ref.extractall('/sdcard/qpython/projects3/')\n"+
       "os.system('cd /sdcard/qpython/projects3/ && rm Glubhouse.zip')\n"+
       "os.system('cd /sdcard/qpython/projects3/Glubhouse && /data/data/org.qpython.qpy3/files/bin/python3-android5 /data/data/org.qpython.qpy3/files/bin/pip3 install -r requirements.txt')";
-    mBundle.putString("pycode", code);
-    intent.putExtras(mBundle);
+    
     Toast.makeText(getApplicationContext(), "Whait for installing and click ENTER", Toast.LENGTH_LONG).show();
-    cont.startActivityForResult(intent, InstallPipReq);
+    cont.startActivityForResult(funcs.SendCodeToQPython(code), InstallPipReq);
 
     Pprogress.setText("70%");
     Log.i("lll", "70%");
@@ -349,6 +340,45 @@ public class MainActivity extends AppCompatActivity
   }
 
 
+  @Override
+  protected void onNewIntent(Intent intent){
+    super.onNewIntent(intent);
+    setIntent(intent);
+    if(Intent.ACTION_VIEW.equals(intent.getAction())){
+      //joinChannelFromIntent();
+      Uri data=getIntent().getData();
+      List<String> path=data.getPathSegments();
+      String id=path.get(path.size()-1);
+      if(path.get(0).equals("room")){
+        //joinChannelById(id);
+        String code = "#qpy::webapp:Glubhouse\n#qpy://localhost:11358/room/"+id+"\n"+
+        "import os,re"+
+        "for x in os.popen(\"ps -o args -a\").read().split(\"\\n\")[1:-1]:\n"+
+        "    if (re.match(x),'Glubhouse/main.py$'):"+
+        "        print('yes',x)"+
+        "    else: print('no',x)";
+        /*
+         #qpy:webapp:Glubhouse
+         #qpy://localhost:11358/start
+         def noRepeat():
+         me = os.popen("ps -o args -p "+str(os.getpid())).read().split("\n")[1:-1][0]
+         for x in os.popen("ps -o pid,args -a").read().split("\n")[1:-1]:
+             x = x.split(' ',1)
+             print(x[1] == me)
+             if(x[0] != str(os.getpid()) and x[1] == me):
+                 sys.exit(0)
+        */
+        cont.startActivityForResult(funcs.SendCodeToQPython(code), 1220);
+      }else if(path.get(0).equals("event")){
+        //
+        String code = "";
+        cont.startActivityForResult(funcs.SendCodeToQPython(code), 1220);
+      }
+    }
+  }
+  
+  
+  
 
   /**
    * Background Async Task to download file

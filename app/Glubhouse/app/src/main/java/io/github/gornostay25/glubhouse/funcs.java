@@ -1,23 +1,14 @@
 package io.github.gornostay25.glubhouse;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.util.Log;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.FileOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.zip.ZipInputStream;
-import java.io.FileInputStream;
-import java.util.zip.ZipEntry;
-import java.io.BufferedInputStream;
-import java.security.PublicKey;
 
 public class funcs
 {
+  public static String extPlgPlusName = MainActivity.extPlgPlusName;
 	public static boolean checkAppInstalledByName(Context context, String packageName) {
 	    if (packageName == null || "".equals(packageName))  
 	        return false;  
@@ -34,7 +25,19 @@ public class funcs
 	    }  
 	}
 	
-	
+	public static Intent SendCodeToQPython(String code){
+      Intent intent = new Intent();
+      intent.setClassName(extPlgPlusName, "org.qpython.qpylib.MPyApi");
+      intent.setAction(extPlgPlusName + ".action.MPyApi");
+      Bundle mBundle = new Bundle(); 
+      mBundle.putString("app", "myappid");
+      mBundle.putString("act", "onPyApi");
+      mBundle.putString("flag", "onQPyExec");            // any String flag you may use in your context
+      mBundle.putString("param", "");     // param String param you may use in your context
+      mBundle.putString("pycode", code);
+      intent.putExtras(mBundle);
+      return intent;
+    }
 	
 //	public static boolean unpackZip(String path, String zipname)
 //	{       

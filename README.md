@@ -8,11 +8,18 @@ Glubhouse use [clubhouse-py](https://github.com/stypr/clubhouse-py)
     - [X] Phone verification
     - [ ] Registration (beta)
     - [X] Whaiting to invite
+- [ ]Profile
+    - Change photo
+    - Change username
+    - Change name
+    - Change bio
+    - Change twiter uname
+    - Change instagram uname
 
 
 ## WTF? Why you start this project?
 
-I started this project earlier than [Gregory](https://github.com/grishka) K with his [Houseclub](https://github.com/grishka/Houseclub)
+I started this project earlier than [Gregory K](https://github.com/grishka) with his [Houseclub](https://github.com/grishka/Houseclub)
 But now this project is just a training of my skills
 
 ## Screenshots
